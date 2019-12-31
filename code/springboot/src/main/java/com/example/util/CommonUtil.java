@@ -22,7 +22,7 @@ public class CommonUtil {
      * 获取当前日期
      * @return
      */
-    public Date getCurDate(){
+    public static Date getCurDate(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return df.parse(df.format(new Date()));
@@ -36,7 +36,7 @@ public class CommonUtil {
      * 获取当前时间
      * @return
      */
-    public Date getCurDateTime(){
+    public static Date getCurDateTime(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             return df.parse(df.format(new Date()));

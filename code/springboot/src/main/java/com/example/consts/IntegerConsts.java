@@ -22,4 +22,9 @@ public class IntegerConsts {
     public static final Integer DEPT_LEVEL_ONE = 1;
     public static final Integer DEPT_LEVEL_TWO = 2;
 
+    /*********************************** 操作类型 **********************************/
+    public static final Integer OPT_TYPE_ADD = 1;
+    public static final Integer OPT_TYPE_UPT = 2;
+    public static final Integer OPT_TYPE_DEL = 3;
+
 }
