@@ -64,7 +64,7 @@
             c_id = #{CId,jdbcType=VARCHAR}
     </delete>
 
-    <select id="" parameterType="com.example.model.User" resultType="com.example.model.User">
+    <select id="getUserById" parameterType="com.example.model.User" resultType="com.example.model.User">
         SELECT
             c_id AS CId,
             c_loginid AS CLoginId,

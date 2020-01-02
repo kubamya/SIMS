@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dept.mapper.DeptMapper">
+
+    <select id="getDeptsByComId" parameterType="com.example.model.Com" resultType="com.example.model.Dept">
+        SELECT
+            c_id AS CId,
+            c_name AS CName,
+            n_sfyx AS NSfyx,
+            n_xssx AS NXssx,
+            c_pid AS CPid,
+            c_comid AS CComId,
+            d_cjsj as DCjsj,
+            d_xgsj as DXgsj,
+            c_cjrid as CCjr,
+            c_xgrid as CXgr,
+            n_jb as NJb
+        FROM
+            t_sims_dept
+        WHERE
+            c_comid = #{CId, jdbcType=VARCHAR}
+    </select>
+
+</mapper>
