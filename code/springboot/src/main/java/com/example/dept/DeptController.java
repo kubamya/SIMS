@@ -1,9 +1,12 @@
 package com.example.dept;
 
+import com.example.com.service.ComService;
 import com.example.consts.IntegerConsts;
 import com.example.dept.service.DeptService;
 import com.example.model.Com;
 import com.example.model.Dept;
+import com.example.model.User;
+import com.example.user.service.UserService;
 import com.example.util.CommonReturnUtil;
 import com.example.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,32 @@ public class DeptController {
     @Autowired
     private DeptService deptService;
 
+    @Autowired
+    private ComService comService;
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 根据comid获取dept树形结构
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getDeptTreeByComId")
     public Map<String, Object> getDeptTreeByComId(HttpServletRequest request) {
         Com com = new Com();
         com.setCId(request.getParameter("comId"));
+
+        try{
+            com = comService.getComById(com);
+            if(com == null){
+                return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_NODATA,null,"未查询到com信息！");
+            }
+        }catch (Exception e){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR,e.getMessage(),"获取com失败！");
+        }
+
 
         List<Dept> depts = new ArrayList<>();
 
@@ -41,7 +65,7 @@ public class DeptController {
         List<Map<String, Object>> resTree = new ArrayList<>();
 
         Map<String, Object> tree = new HashMap<>();
-        tree.put("label", "");//TODO 获取com信息
+        tree.put("label",com.getCName());
         tree.put("id", com.getCId());
 
         List<Map<String, Object>> treeNodes = new ArrayList<>();
@@ -50,6 +74,7 @@ public class DeptController {
                 Map<String, Object> treeNode = new HashMap<>();
                 treeNode.put("label", dept.getCName());
                 treeNode.put("id", dept.getCId());
+
                 treeNode.put("children",CommonUtil.getDeptTreeByComId(dept.getCId(), depts));
                 treeNodes.add(treeNode);
             }

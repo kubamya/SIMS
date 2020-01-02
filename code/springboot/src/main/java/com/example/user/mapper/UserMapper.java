@@ -3,6 +3,8 @@ package com.example.user.mapper;
 import com.example.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserMapper {
 
@@ -31,4 +33,10 @@ public interface UserMapper {
      */
     public User getUserById(User user);
 
+    /**
+     * 根据deptId获取对应user
+     * @param user
+     * @return
+     */
+    public List<User> getUsersByDeptId(User user);
 }

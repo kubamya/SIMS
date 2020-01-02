@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.com.mapper.ComMapper">
+
+    <select id="getComById" parameterType="com.example.model.Com" resultType="com.example.model.Com">
+        SELECT
+            c_id AS CId,
+            c_name AS CName,
+            n_sfyx AS NSfyx,
+            n_xssx AS NXssx,
+            d_cjsj as DCjsj,
+            d_xgsj as DXgsj,
+            c_cjrid as CCjr,
+            c_xgrid as CXgr
+        FROM
+            t_sims_com
+        WHERE
+            c_id = #{CId, jdbcType=VARCHAR}
+    </select>
+
+</mapper>

@@ -23,6 +23,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 根据userId获取user
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getUserById")
     public Map<String, Object> getUserById(HttpServletRequest request) {
@@ -36,6 +41,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 根据userId删除user
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/deleteUser")
     public Map<String, Object> deleteUser(HttpServletRequest request) {
@@ -49,6 +59,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 新增或更新user
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/addOrUpdateUser")
     public Map<String, Object> addOrUpdateUser(HttpServletRequest request) {
@@ -76,6 +91,11 @@ public class UserController {
 
     }
 
+    /**
+     * 处理前端传递参数公用方法
+     * @param request
+     * @return
+     */
     private User handleRequest(HttpServletRequest request){
         //获取前台参数
         User user = new User();

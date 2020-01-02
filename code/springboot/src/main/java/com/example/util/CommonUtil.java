@@ -3,6 +3,9 @@ package com.example.util;
 import com.example.dept.service.impl.DeptServiceImpl;
 import com.example.model.Com;
 import com.example.model.Dept;
+import com.example.model.User;
+import com.example.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +15,9 @@ import java.util.*;
  * 公用方法
  */
 public class CommonUtil {
+
+    @Autowired
+    private static UserService userService;
 
     /**
      * 获取32位UUID
@@ -57,6 +63,23 @@ public class CommonUtil {
                 treeNode.put("label", dept.getCName());
                 treeNode.put("id", dept.getCId());
                 treeNode.put("children",getDeptTreeByComId(dept.getCId(), depts));
+
+                //部门下的人员
+//                User user = new User();
+//                user.setCDeptId(dept.getCId());
+//                List<User> userList = userService.getUsersByDeptId(user);
+//                List<Map<String, Object>> userMapList =  new ArrayList<>();
+//                if(userList != null && !userList.isEmpty()){
+//                    for (User user1 : userList){
+//                        Map<String, Object> userMap = new HashMap<>();
+//                        userMap.put("label", user1.getCUserName());
+//                        userMap.put("id", user1.getCId());
+//
+//                        userMapList.add(userMap);
+//                    }
+//                }
+//
+//                treeNode.put("children",getDeptTreeByComId(dept.getCId(), depts).addAll(userMapList));
 
                 tree.add(treeNode);
             }

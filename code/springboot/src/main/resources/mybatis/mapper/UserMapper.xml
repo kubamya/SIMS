@@ -84,4 +84,25 @@
         WHERE
             c_id = #{CId,jdbcType=VARCHAR}
     </select>
+
+    <select id="getUsersByDeptId" parameterType="com.example.model.User" resultType="com.example.model.User">
+        SELECT
+            c_id AS CId,
+            c_loginid AS CLoginId,
+            c_password AS CPassword,
+            c_username AS CUserName,
+            c_comid AS CComId,
+            c_deptid AS CDeptId,
+            c_email AS CEmail,
+            c_tel AS CTel,
+            n_sfyx AS NSfyx,
+            n_xssx AS NXssx,
+            d_cjsj AS DCjsj,
+            c_cjrid AS CCjr,
+            d_xgsj AS DXgsj,
+            c_xgrid AS CXgr
+        FROM t_sims_user
+        WHERE
+            c_deptid = #{CDeptId,jdbcType=VARCHAR}
+    </select>
 </mapper>

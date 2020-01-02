@@ -1,7 +1,10 @@
 package com.example.user.service;
 
+import com.example.model.Dept;
 import com.example.model.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface UserService {
@@ -30,4 +33,11 @@ public interface UserService {
      * @return
      */
     public User getUserById(User user);
+
+    /**
+     * 根据deptId获取对应user
+     * @param user
+     * @return
+     */
+    public List<User> getUsersByDeptId(User user);
 }
