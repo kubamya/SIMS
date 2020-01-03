@@ -3,11 +3,14 @@
         <div class="organ-tree-header">
             <div class="organ-tree-header-icon"><i class="el-icon-school"></i></div>
             <div class="organ-tree-header-text">组织机构一览</div>
+            <div class="organ-tree-header-refresh"><i class="el-icon-refresh"></i></div>
         </div>
         <div class="organ-tree-content">
             <el-tree
                 :props="props"
                 :load="loadNode"
+                @node-click="handleNodeClick"
+                :expand-on-click-node="false"
                 lazy>
             </el-tree>
         </div>
@@ -30,6 +33,9 @@ export default {
         // this.getTreeRoot();
     },
     methods:{
+        handleNodeClick(data){
+            this.$emit('prtFunc',data.id, data.type);
+        },
         loadNode(node, resolve){
             //如果展开第一级节点，从后台加载一级节点列表
             if (node.level == 0) {
@@ -60,7 +66,7 @@ export default {
                     var root = {
                         name:'',
                         id:'',
-                        type:'root'
+                        type:'com'
                     }
                     root.name = res.data.cname;
                     root.id = res.data.cid;
@@ -93,6 +99,18 @@ export default {
     position: absolute;
     top: 0;
     left: 10px;
+}
+.organ-tree-header-refresh{
+    width: 30px;
+    height: 30px;
+    color: #409Eff;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
 }
 .organ-tree-header-text{
     width: calc(100% - 40px);

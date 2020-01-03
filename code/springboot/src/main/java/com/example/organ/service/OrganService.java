@@ -36,4 +36,10 @@ public interface OrganService {
      * @return
      */
     public List<User> getUserByDeptId(User user);
+
+    /**
+     * 获取所有的com
+     * @return
+     */
+    public List<Com> getAllCom();
 }

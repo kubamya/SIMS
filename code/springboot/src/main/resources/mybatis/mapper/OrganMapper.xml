@@ -10,6 +10,7 @@
             t_sims_dept
         WHERE
             c_pid = #{CPid, jdbcType=VARCHAR}
+            and n_sfyx = 1
         order by n_xssx asc
     </select>
 
@@ -22,6 +23,7 @@
         WHERE
             c_comid = #{CComId, jdbcType=VARCHAR}
             and c_pid is null
+            and n_sfyx = 1
         order by n_xssx asc
     </select>
 
@@ -33,7 +35,18 @@
             t_sims_user
         WHERE
             c_deptid = #{CDeptId, jdbcType=VARCHAR}
+            and n_sfyx = 1
         order by n_xssx asc
     </select>
 
+    <select id="getAllCom" resultType="com.example.model.Com">
+        SELECT
+            c_id AS CId,
+            c_name AS CName,
+            n_xssx AS NXssx
+        FROM
+            t_sims_com
+        ORDER BY
+            n_xssx ASC
+    </select>
 </mapper>

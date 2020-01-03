@@ -36,4 +36,11 @@ public interface OrganMapper {
      * @return
      */
     public List<Dept> getDeptByComid(Dept dept);
+
+    /**
+     * 获取所有的com
+     * @return
+     */
+    public List<Com> getAllCom();
+
 }

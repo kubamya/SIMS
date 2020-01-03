@@ -87,6 +87,7 @@ export default {
 }
 .header-info a {
     margin-left: 20px;
+    cursor: pointer;
 }
 </style>
 

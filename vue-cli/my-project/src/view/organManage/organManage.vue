@@ -1,7 +1,7 @@
 <template>
     <div class="organ-container">
         <div class="organ-treeContent">
-            <organTreeCom></organTreeCom>
+            <organTreeCom @prtFunc="show"></organTreeCom>
         </div>
         <div class="organ-editBtns">
             <el-button class="organ-editBtns-item" type="primary">新增1</el-button>
@@ -9,15 +9,29 @@
             <el-button class="organ-editBtns-item" type="primary">新增3</el-button>
         </div>
         <div class="organ-infoContent">
-
+            <organInfoCom :nodeId="nodeId" :nodeType="nodeType" ></organInfoCom>
         </div>
     </div>
 </template>
 <script>
 import organTree from '@/components/organTree.vue'
+import organInfo from '@/components/organInfo.vue'
 export default {
     components:{
-        organTreeCom:organTree
+        organTreeCom:organTree,
+        organInfoCom:organInfo
+    },
+    data(){
+        return{
+            nodeId:'',
+            nodeType:'',
+        }
+    },
+    methods:{
+        show(nodeId, nodeType){
+            this.nodeId = nodeId;
+            this.nodeType = nodeType;
+        }
     }
 }
 </script>

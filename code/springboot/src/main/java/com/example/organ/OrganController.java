@@ -24,6 +24,11 @@ public class OrganController{
     @Autowired
     private OrganService organService;
 
+    /**
+     * 懒加载组织机构树节点
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getOrganTreeNode")
     public Map<String, Object> getOrganTreeNode(HttpServletRequest request) {
@@ -39,7 +44,7 @@ public class OrganController{
 
         try{
 
-            if("root".equals(type)){
+            if("com".equals(type)){
                 dept.setCComId(request.getParameter("id"));
                 deptList = organService.getDeptByComid(dept);
             }else{
@@ -65,6 +70,7 @@ public class OrganController{
                     userMap.put("name", user1.getCUserName());
                     userMap.put("id",user1.getCId());
                     userMap.put("leaf", true);
+                    userMap.put("type","user");
 
                     resultList.add(userMap);
                 }
@@ -84,12 +90,21 @@ public class OrganController{
     @ResponseBody
     @RequestMapping("/getOrganTreeRoot")
     public Map<String, Object> getOrganTreeRoot(HttpServletRequest request) {
-        Com com = new Com();
-        com.setCId(request.getParameter("comId"));
-
+        List<Com> comList = new ArrayList<>();
+        List<Map<String, Object>> res = new ArrayList<>();
         try{
-            com = organService.getComById(com);
-            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS,com,"查询成功！");
+            comList = organService.getAllCom();
+            if(!comList.isEmpty()){
+                for (Com com : comList){
+                    Map<String, Object> comMap = new HashMap<>();
+                    comMap.put("name", com.getCName());
+                    comMap.put("id", com.getCId());
+                    comMap.put("type", "com");
+
+                    res.add(comMap);
+                }
+            }
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS,res,"查询成功！");
         }catch (Exception e){
             return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR,e.getMessage(),"查询失败！");
         }

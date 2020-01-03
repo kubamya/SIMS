@@ -39,4 +39,9 @@ public class OrganServiceImpl implements OrganService {
     public List<User> getUserByDeptId(User user) {
         return organMapper.getUserByDeptId(user);
     }
+
+    @Override
+    public List<Com> getAllCom() {
+        return organMapper.getAllCom();
+    }
 }
