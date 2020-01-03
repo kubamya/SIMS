@@ -33,7 +33,7 @@ public class LoginController {
     @RequestMapping("/loginDefault")
     public Map<String, Object> loginDefault(HttpServletRequest request) {
         //获取传递参数
-        String loginid = request.getParameter("loginid");
+        String loginid = request.getParameter("loginId");
         String password = request.getParameter("password");
 
         try {

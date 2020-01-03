@@ -11,8 +11,30 @@ export default {
       name: 'App'
     }
   },
+   methods:{
+        checkLoginTime(){
+            var lastLoginTime = this.$handleLocalStorage('get','lastLoginTime');
+
+            if(lastLoginTime == undefined || lastLoginTime == null){
+                return false;
+            }
+
+            var curTime = this.$getCurtime();
+
+            if(curTime - lastLoginTime > 1800){
+                return false;
+            }else{
+                return true;
+            };
+
+        },
+    },
   mounted(){
-    this.$router.push({path: '/login'});
+    if(this.checkLoginTime()){
+      this.$router.push({path: '/main'});
+    }else{
+      this.$router.push({path: '/login'});
+    }
   }
   
 }

@@ -9,7 +9,7 @@
                     <i class="el-icon-user"></i>
                 </div>
                 <div class="ipt-info">
-                    <input type="text" placeholder="请输入账号">
+                    <input type="text" v-model="loginId" placeholder="请输入账号">
                 </div>
             </div>
             <div class="login-form-row">
@@ -17,7 +17,7 @@
                     <i class="el-icon-lock"></i>
                 </div>
                 <div class="ipt-info">
-                    <input type="password" placeholder="请输入密码">
+                    <input type="password" v-model="password" placeholder="请输入密码">
                 </div>
             </div>
             <div class="login-form-row">
@@ -25,20 +25,45 @@
             </div>
         </div>
         <div class="login-footer">
-            BOJIA | 辽宁博嘉科技
+            <!-- BOJIA | 辽宁博嘉科技 -->
         </div>
     </div>
 </template>
 <script>
+import _global from '@/global/global.vue'
 export default {
     data(){
         return {
-
+            loginId:'',
+            password:'',
         }
     },
     methods:{
+        
         login(){
-            this.$router.push({path: '/home'});
+            var params = new URLSearchParams();
+            params.append('loginId', this.loginId);
+            params.append('password', this.password);
+
+            this.$axios({method:'post',url: _global.requestUrl+'/api/login/v1/loginDefault', data: params})
+                .then(response =>{
+                    var res = this.$handleRes(response);
+
+                    if(res.code == 100){
+                        console.log(res);
+                        this.$handleLocalStorage('set', 'comId', res.data.comid);
+                        this.$handleLocalStorage('set', 'deptid', res.data.deptid);
+                        this.$handleLocalStorage('set', 'id', res.data.id);
+                        this.$handleLocalStorage('set', 'username', res.data.username);
+                        this.$handleLocalStorage('set', 'lastLoginTime', this.$getCurtime());
+                        this.$router.push({path: '/main'});
+                    }else{
+                        this.$message({
+                            message: res.msg,
+                            type: 'warning'
+                        });
+                    }
+                })
         }
     }
 }
