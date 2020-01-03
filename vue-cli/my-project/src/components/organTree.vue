@@ -62,16 +62,7 @@ export default {
             this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getOrganTreeRoot', data: params})
                 .then(response=>{
                     var res = this.$handleRes(response);
-                    var rootList = [];
-                    var root = {
-                        name:'',
-                        id:'',
-                        type:'com'
-                    }
-                    root.name = res.data.cname;
-                    root.id = res.data.cid;
-                    rootList.push(root);
-                    return resolve(rootList);
+                    return resolve(res.data);
                 });
         }
     }
