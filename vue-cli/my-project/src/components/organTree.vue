@@ -42,13 +42,11 @@ export default {
         },
         loadChildNode(node, resolve){
             var params = new URLSearchParams();
-            console.log(node);
             params.append('id', node.data.id);
             params.append('type', node.data.type);
             this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getOrganTreeNode', data: params})
                 .then(response=>{
                     var res = this.$handleRes(response);
-                    console.log(res)
                     return resolve(res.data);
                 });
         },
