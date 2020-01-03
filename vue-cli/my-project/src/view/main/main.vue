@@ -48,7 +48,7 @@ export default {
     /* width: calc(100% - 280px); */
     width: 100%;
     height: calc(100% - 50px);
-    /* background-color: #ccc; */
+    background: url('../../../static/img/mainBg.jpg');
     position: absolute;
     top: 50px;
     right: 0px;

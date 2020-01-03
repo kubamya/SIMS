@@ -4,9 +4,9 @@
             <organTreeCom @prtFunc="show"></organTreeCom>
         </div>
         <div class="organ-editBtns">
-            <el-button class="organ-editBtns-item" type="primary">新增组织</el-button>
-            <el-button class="organ-editBtns-item" type="primary">新增部门</el-button>
-            <el-button class="organ-editBtns-item" type="primary">新增人员</el-button>
+            <el-button class="organ-editBtns-item" round type="primary">新增组织</el-button>
+            <el-button class="organ-editBtns-item" round type="primary">新增部门</el-button>
+            <el-button class="organ-editBtns-item" round type="primary">新增人员</el-button>
         </div>
         <div class="organ-infoContent">
             <organInfoCom :nodeId="nodeId" :nodeType="nodeType" ></organInfoCom>
@@ -54,6 +54,7 @@ export default {
     left: 10px;
 }
 .organ-editBtns{
+    background-color: #fff;
     width: calc(100% - 430px);
     height: 80px;
     line-height: 80px;
@@ -64,6 +65,7 @@ export default {
     left: 420px;
 }
 .organ-infoContent{
+    background-color: #fff;
     width: calc(100% - 430px);
     height: calc(96% - 90px);
     border-radius: 10px;
