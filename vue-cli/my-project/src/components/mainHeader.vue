@@ -16,9 +16,9 @@ import _global from '@/global/global.vue'
 export default {
     data(){
         return{
-            sysName:'SIMS',
-            version:'v1.0',
-            userName:'超级管理员',
+            sysName:'',
+            version:'',
+            userName:'',
         }
     },
     mounted(){
@@ -31,7 +31,7 @@ export default {
         },
         getSysInfo(){
             var params = new URLSearchParams();
-            this.$axios({method:'post',url: _global.requestUrl+'/api/sys/v1/getSysInfo', data: params})
+            this.$axios({method:'get',url: _global.requestUrl+'/api/sys/v1/getSysInfo', data: params})
                 .then(response =>{
                     var res = this.$handleRes(response);
 

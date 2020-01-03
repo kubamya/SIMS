@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.organ.mapper.OrganMapper">
+
+    <select id="getDeptByPid" parameterType="com.example.model.Dept" resultType="com.example.model.Dept">
+        SELECT
+            c_id AS CId,
+            c_name AS CName
+        FROM
+            t_sims_dept
+        WHERE
+            c_pid = #{CPid, jdbcType=VARCHAR}
+        order by n_xssx asc
+    </select>
+
+    <select id="getDeptByComid" parameterType="com.example.model.Dept" resultType="com.example.model.Dept">
+        SELECT
+            c_id AS CId,
+            c_name AS CName
+        FROM
+            t_sims_dept
+        WHERE
+            c_comid = #{CComId, jdbcType=VARCHAR}
+            and c_pid is null
+        order by n_xssx asc
+    </select>
+
+    <select id="getUserByDeptId" parameterType="com.example.model.User" resultType="com.example.model.User">
+        SELECT
+            c_id AS CId,
+            c_username AS CUserName
+        FROM
+            t_sims_user
+        WHERE
+            c_deptid = #{CDeptId, jdbcType=VARCHAR}
+        order by n_xssx asc
+    </select>
+
+</mapper>

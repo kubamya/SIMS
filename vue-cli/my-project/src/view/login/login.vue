@@ -53,7 +53,7 @@ export default {
                         console.log(res);
                         this.$handleLocalStorage('set', 'comId', res.data.comid);
                         this.$handleLocalStorage('set', 'deptid', res.data.deptid);
-                        this.$handleLocalStorage('set', 'id', res.data.id);
+                        this.$handleLocalStorage('set', 'userid', res.data.id);
                         this.$handleLocalStorage('set', 'username', res.data.username);
                         this.$handleLocalStorage('set', 'lastLoginTime', this.$getCurtime());
                         this.$router.push({path: '/main'});
