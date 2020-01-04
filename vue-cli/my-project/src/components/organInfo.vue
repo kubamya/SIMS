@@ -44,7 +44,56 @@
                 <div class="info-header-icon"><i class="el-icon-menu"></i></div>
                 <div class="info-header-text">部门信息</div>
             </div>
-
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>所属组织：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">所属部门：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>部门名称：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">显示顺序：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
             <div class="info-row"></div>
             <div class="info-row">
                 <div class="info-btns">
@@ -59,7 +108,119 @@
                 <div class="info-header-icon"><i class="el-icon-menu"></i></div>
                 <div class="info-header-text">人员信息</div>
             </div>
-
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>所属组织：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">所属部门：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>姓名：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">账号：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>密码：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">确认密码：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label"><span class="require">*</span>邮箱：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                    
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">电话：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <div class="info-item-label">显示顺序：</div>
+                    <div class="info-item-value">
+                        <el-input 
+                            style="width:50%;" 
+                            clearable 
+                            v-model="com.name" 
+                            :disabled="!isUpdate"
+                            placeholder="请输入名称"></el-input>
+                    </div>
+                </div>
+            </div>
             <div class="info-row"></div>
             <div class="info-row">
                 <div class="info-btns">
