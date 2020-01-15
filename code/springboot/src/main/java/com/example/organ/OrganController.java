@@ -1,11 +1,13 @@
 package com.example.organ;
 
+import com.example.com.service.ComService;
 import com.example.consts.IntegerConsts;
 import com.example.model.Com;
 import com.example.model.Dept;
 import com.example.model.User;
 import com.example.organ.service.OrganService;
 import com.example.util.CommonReturnUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +25,32 @@ public class OrganController{
 
     @Autowired
     private OrganService organService;
+
+    @Autowired
+    private ComService comService;
+
+    /**
+     * 获取com信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getComInfo")
+    public Map<String, Object> getComInfo(HttpServletRequest request) {
+        String comId = request.getParameter("comId");
+        if(StringUtils.isBlank(comId)){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL,null,"comId不能为空！");
+        }
+
+        Com com = new Com();
+        com.setCId(comId);
+
+        try{
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, comService.getComById(com), "查询成功！");
+        }catch (Exception e){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, e.getMessage(), "查询失败！");
+        }
+    }
 
     /**
      * 懒加载组织机构树节点
