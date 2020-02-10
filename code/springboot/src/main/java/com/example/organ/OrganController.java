@@ -29,6 +29,12 @@ public class OrganController{
     @Autowired
     private ComService comService;
 
+    @ResponseBody
+    @RequestMapping("/getDeptInfo")
+    public Map<String, Object> getDeptInfo(HttpServletRequest request) {
+        return null;
+    }
+
     /**
      * 获取com信息
      * @param request

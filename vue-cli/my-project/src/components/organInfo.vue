@@ -233,6 +233,7 @@
     </div>
 </template>
 <script>
+import _global from '@/global/global.vue'
 export default {
     props:['nodeId','nodeType'],
     data(){
@@ -240,9 +241,48 @@ export default {
             isUpdate:false,
             com:{
                 name:'',
-                xssx:''
+                xssx:'',
+                id:'',
             }
         }
+    },
+    watch:{
+        nodeId(){
+            console.log('获得',this.nodeId);
+            if(this.nodeType == 'dept'){
+                return;
+            }
+            if(this.nodeType == 'com'){
+
+                var params = new URLSearchParams();
+                params.append('comId', this.nodeId);
+
+                this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getComInfo', data: params})
+                    .then(response =>{
+                        var res = this.$handleRes(response);
+
+                        if(res.code == 100){
+                            console.log(res);
+                            this.com.id = res.data.cid;
+                            this.com.name = res.data.cname;
+                            this.com.xssx = res.data.nxssx;
+                        }else{
+                            this.$message({
+                                message: res.msg,
+                                type: 'warning'
+                            });
+                        }
+                    })
+
+                return;
+            }
+            if( this.nodeType== 'user'){
+                return;
+            }
+        },
+    },
+    methods:{
+
     }
 }
 </script>
