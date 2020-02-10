@@ -15,4 +15,11 @@ public interface DeptMapper {
      * @return
      */
     public List<Dept> getDeptsByComId(Com com);
+
+    /**
+     * 根据deptId获取dept
+     * @param dept
+     * @return
+     */
+    public Dept getDeptById(Dept dept);
 }

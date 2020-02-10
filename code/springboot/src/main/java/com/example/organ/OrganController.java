@@ -2,10 +2,12 @@ package com.example.organ;
 
 import com.example.com.service.ComService;
 import com.example.consts.IntegerConsts;
+import com.example.dept.service.DeptService;
 import com.example.model.Com;
 import com.example.model.Dept;
 import com.example.model.User;
 import com.example.organ.service.OrganService;
+import com.example.user.service.UserService;
 import com.example.util.CommonReturnUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,56 @@ public class OrganController{
     @Autowired
     private ComService comService;
 
+    @Autowired
+    private DeptService deptService;
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 获取user信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getUserInfo")
+    public Map<String, Object> getUserInfo(HttpServletRequest request) {
+        String userId = request.getParameter("userId");
+        if(StringUtils.isBlank(userId)){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL,null,"userId不能为空！");
+        }
+
+        User user = new User();
+        user.setCId(userId);
+
+        try{
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS,userService.getUserById(user),"查询成功！");
+        }catch (Exception e){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, e.getMessage(), "查询失败！");
+        }
+    }
+
+    /**
+     * 获取dept信息
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getDeptInfo")
     public Map<String, Object> getDeptInfo(HttpServletRequest request) {
-        return null;
+        String deptId = request.getParameter("deptId");
+        if(StringUtils.isBlank(deptId)){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL,null,"deptId不能为空！");
+        }
+
+        Dept dept = new Dept();
+        dept.setCId(deptId);
+
+        try{
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS,deptService.getDeptById(dept),"查询成功！");
+        }catch (Exception e){
+            return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, e.getMessage(), "查询失败！");
+        }
     }
 
     /**

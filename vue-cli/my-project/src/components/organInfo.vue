@@ -51,7 +51,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="dept.comId" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -63,7 +63,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="dept.pid" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -76,7 +76,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="dept.name" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -88,7 +88,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="dept.xssx" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -115,7 +115,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.comId" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -127,7 +127,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.deptId" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -140,7 +140,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.name" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -152,7 +152,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.loginId" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -165,7 +165,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.password" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -177,7 +177,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.confirmPass" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -190,7 +190,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.email" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -202,7 +202,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.tel" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -215,7 +215,7 @@
                         <el-input 
                             style="width:50%;" 
                             clearable 
-                            v-model="com.name" 
+                            v-model="user.xssx" 
                             :disabled="!isUpdate"
                             placeholder="请输入名称"></el-input>
                     </div>
@@ -243,6 +243,25 @@ export default {
                 name:'',
                 xssx:'',
                 id:'',
+            },
+            dept:{
+                comId:'',
+                pid:'',
+                name:'',
+                xssx:'',
+                id:'',
+            },
+            user:{
+                comId:'',
+                deptId:'',
+                name:'',
+                loginId:'',
+                password:'',
+                confirmPass:'',
+                email:'',
+                tel:'',
+                xssx:'',
+                id:'',
             }
         }
     },
@@ -250,6 +269,27 @@ export default {
         nodeId(){
             console.log('获得',this.nodeId);
             if(this.nodeType == 'dept'){
+                var params = new URLSearchParams();
+                params.append('deptId', this.nodeId);
+
+                this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getDeptInfo', data: params})
+                    .then(response =>{
+                        var res = this.$handleRes(response);
+
+                        if(res.code == 100){
+                            console.log(res);
+                            this.dept.id = res.data.cid;
+                            this.dept.name = res.data.cname;
+                            this.dept.xssx = res.data.nxssx;
+                            this.dept.comId = res.data.ccomId;
+                            this.dept.pid = res.data.cpid;
+                        }else{
+                            this.$message({
+                                message: res.msg,
+                                type: 'warning'
+                            });
+                        }
+                    })
                 return;
             }
             if(this.nodeType == 'com'){
@@ -277,6 +317,32 @@ export default {
                 return;
             }
             if( this.nodeType== 'user'){
+                var params = new URLSearchParams();
+                params.append('userId', this.nodeId);
+
+                this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getUserInfo', data: params})
+                    .then(response =>{
+                        var res = this.$handleRes(response);
+
+                        if(res.code == 100){
+                            console.log(res);
+                            this.user.id = res.data.cid;
+                            this.user.name = res.data.cuserName;
+                            this.user.xssx = res.data.nxssx;
+                            this.user.comId = res.data.ccomId;
+                            this.user.deptId = res.data.cdeptId;
+                            this.user.loginId = res.data.cloginId;
+                            this.user.password = '';
+                            this.user.confirmPass = '';
+                            this.user.email = res.data.cemail;
+                            this.user.tel = res.data.ctel;
+                        }else{
+                            this.$message({
+                                message: res.msg,
+                                type: 'warning'
+                            });
+                        }
+                    })
                 return;
             }
         },

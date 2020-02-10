@@ -19,4 +19,9 @@ public class DeptServiceImpl implements DeptService {
     public List<Dept> getDeptsByComId(Com com) {
         return deptMapper.getDeptsByComId(com);
     }
+
+    @Override
+    public Dept getDeptById(Dept dept) {
+        return deptMapper.getDeptById(dept);
+    }
 }

@@ -21,4 +21,24 @@
             c_comid = #{CId, jdbcType=VARCHAR}
     </select>
 
+    <select id="getDeptById" parameterType="com.example.model.Dept" resultType="com.example.model.Dept">
+        SELECT
+            dept.c_id AS CId,
+            dept.c_name AS CName,
+            dept.n_sfyx AS NSfyx,
+            dept.n_xssx AS NXssx,
+            com.c_name AS CComId,
+            pdept.c_name AS CPid,
+            dept.d_cjsj AS DCjsj,
+            dept.d_xgsj AS DXgsj,
+            dept.c_cjrid AS CCjr,
+            dept.c_xgrid AS CXgr,
+            dept.n_jb AS NJb
+        FROM
+            t_sims_dept AS dept
+            LEFT JOIN t_sims_com AS com ON dept.c_comid = com.c_id
+            LEFT JOIN t_sims_dept AS pdept ON dept.c_pid = pdept.c_id
+        WHERE
+            dept.c_id = #{CId, jdbcType=VARCHAR}
+    </select>
 </mapper>
