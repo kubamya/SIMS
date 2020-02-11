@@ -53,7 +53,7 @@
                             clearable 
                             v-model="dept.comId" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请选择组织"></el-input>
                     </div>
                     
                 </div>
@@ -65,7 +65,7 @@
                             clearable 
                             v-model="dept.pid" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请选择部门"></el-input>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                             clearable 
                             v-model="dept.xssx" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请输入顺序"></el-input>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                             clearable 
                             v-model="user.comId" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="选择组织"></el-input>
                     </div>
                     
                 </div>
@@ -129,7 +129,7 @@
                             clearable 
                             v-model="user.deptId" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请选择部门"></el-input>
                     </div>
                 </div>
             </div>
@@ -154,11 +154,11 @@
                             clearable 
                             v-model="user.loginId" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请输入账号"></el-input>
                     </div>
                 </div>
             </div>
-            <div class="info-row">
+            <!-- <div class="info-row">
                 <div class="info-item">
                     <div class="info-item-label"><span class="require">*</span>密码：</div>
                     <div class="info-item-value">
@@ -167,7 +167,8 @@
                             clearable 
                             v-model="user.password" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            type="password"
+                            placeholder="请输入密码"></el-input>
                     </div>
                     
                 </div>
@@ -179,10 +180,11 @@
                             clearable 
                             v-model="user.confirmPass" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            type="password"
+                            placeholder="请确认密码"></el-input>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="info-row">
                 <div class="info-item">
                     <div class="info-item-label"><span class="require">*</span>邮箱：</div>
@@ -192,7 +194,7 @@
                             clearable 
                             v-model="user.email" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请输入邮箱"></el-input>
                     </div>
                     
                 </div>
@@ -204,7 +206,7 @@
                             clearable 
                             v-model="user.tel" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请输入电话"></el-input>
                     </div>
                 </div>
             </div>
@@ -217,7 +219,7 @@
                             clearable 
                             v-model="user.xssx" 
                             :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            placeholder="请输入顺序"></el-input>
                     </div>
                 </div>
             </div>
@@ -226,6 +228,7 @@
                 <div class="info-btns">
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" type="primary">修改密码</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>
