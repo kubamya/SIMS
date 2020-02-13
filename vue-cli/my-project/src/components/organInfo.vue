@@ -35,6 +35,7 @@
                 <div class="info-btns">
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>
@@ -99,6 +100,7 @@
                 <div class="info-btns">
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>
@@ -229,6 +231,7 @@
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">修改密码</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>

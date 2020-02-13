@@ -80,6 +80,13 @@
             <version>1.2.4</version>
         </dependency>
         <!-- /数据解析所需包 -->
+
+        <!-- ftpclient -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.1</version>
+        </dependency>
     </dependencies>
 
     <build>

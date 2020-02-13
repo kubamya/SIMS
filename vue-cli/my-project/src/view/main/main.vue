@@ -3,12 +3,13 @@
         <div class="main-header">
             <mainHeaderCom></mainHeaderCom>
         </div>
-        <!-- <div class="main-nav">
+        <div class="main-nav">
             <navCom></navCom>
-        </div> -->
+        </div>
         <div class="main-content">
             <router-view/>
         </div>
+
         
     </div>
 </template>
@@ -26,7 +27,7 @@ export default {
     },
    
     mounted(){
-        this.$router.push({path:'/organManage'});
+        // this.$router.push({path:'/organManage'});
     },
     methods:{
     }
@@ -45,7 +46,7 @@ export default {
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04); */
 }
 .main-content{
-    /* width: calc(100% - 280px); */
+    /* width: calc(100% - 150px); */
     width: 100%;
     height: calc(100% - 50px);
     background: url('../../../static/img/mainBg.jpg');
@@ -54,13 +55,14 @@ export default {
     right: 0px;
 }
 .main-nav{
-    width: 80%;
-    height: 80px;
-    /* border-right: 1px solid #409EFF;
-    box-sizing: border-box;
-    border-collapse: collapse; */
-    position: absolute;
+    z-index: 999;
+    background-color: rgba(64,158,255, 0.9);
+    width: 70%;
+    height: 60px;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    position: fixed;
     bottom: 0;
-    left: 10%;
+    left: 15%;
 }
 </style>
