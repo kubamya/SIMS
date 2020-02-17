@@ -10,7 +10,11 @@
                 <el-tab-pane label="日程一览" name="second">
                     <calenderCom></calenderCom>
                 </el-tab-pane>
-                <el-tab-pane label="日程查询" name="third">日程查询</el-tab-pane>
+                <el-tab-pane label="日程查询" name="third">
+                    <div style="height:600px;">
+                        <scheduleListCom></scheduleListCom>
+                    </div>
+                </el-tab-pane>
             </el-tabs>
         </div>        
     </div>
@@ -18,10 +22,12 @@
 <script>
 import calender from '@/components/calender.vue'
 import addSchedule from '@/components/addSchedule.vue'
+import scheduleList from '@/components/scheduleList.vue'
 export default {
     components:{
         calenderCom : calender,
-        addScheduleCom : addSchedule
+        addScheduleCom : addSchedule,
+        scheduleListCom : scheduleList
     },
     data(){
         return {
