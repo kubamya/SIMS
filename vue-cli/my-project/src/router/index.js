@@ -5,6 +5,7 @@ import ewm from '@/components/ewm.vue'
 import main from '@/view/main/main.vue'
 import login from '@/view/login/login.vue'
 import organManage from '@/view/organManage/organManage.vue'
+import schedule from '@/view/schedule/schedule.vue'
 
 
 Vue.use(Router)
@@ -30,6 +31,11 @@ export default new Router({
           path: '/organManage',
           name: 'organManage',
           component: organManage
+        },
+        {
+          path: '/schedule',
+          name: 'schedule',
+          component: schedule
         },
       ]
     },

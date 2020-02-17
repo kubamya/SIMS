@@ -25,14 +25,7 @@ export default {
         go(item){
             switch(item.id){
                 case '1': this.$router.push({path:'/main'});break;
-                case '2': 
-                    this.$notify({
-                        title: '提示',
-                        type: 'warning',
-                        duration: 1500,
-                        message: '此模块暂未开放！'
-                    });
-                break;
+                case '2': this.$router.push({path:'/schedule'});break;
                 case '3': this.$router.push({path:'/organManage'});break;
                 case '4': 
                     this.$notify({
