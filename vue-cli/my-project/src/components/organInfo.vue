@@ -124,7 +124,7 @@
                     
                 </div>
                 <div class="info-item">
-                    <div class="info-item-label">所属部门：</div>
+                    <div class="info-item-label"><span class="require">*</span>所属部门：</div>
                     <div class="info-item-value">
                         <el-input 
                             style="width:50%;" 
@@ -149,7 +149,7 @@
                     
                 </div>
                 <div class="info-item">
-                    <div class="info-item-label">账号：</div>
+                    <div class="info-item-label"><span class="require">*</span>账号：</div>
                     <div class="info-item-value">
                         <el-input 
                             style="width:50%;" 
@@ -189,7 +189,7 @@
             </div> -->
             <div class="info-row">
                 <div class="info-item">
-                    <div class="info-item-label"><span class="require">*</span>邮箱：</div>
+                    <div class="info-item-label">邮箱：</div>
                     <div class="info-item-value">
                         <el-input 
                             style="width:50%;" 
