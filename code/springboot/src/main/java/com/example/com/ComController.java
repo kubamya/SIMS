@@ -5,6 +5,9 @@ import com.example.consts.IntegerConsts;
 import com.example.model.Com;
 import com.example.util.CommonReturnUtil;
 import com.example.util.CommonUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/com/v1")
+@Slf4j
 public class ComController {
 
     @Autowired
@@ -25,10 +29,10 @@ public class ComController {
     public Map<String, Object> getComById(HttpServletRequest request) {
         Com com = new Com();
         com.setCId(request.getParameter("comId"));
-
         try {
             return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, comService.getComById(com), "查询成功！");
         }catch (Exception e){
+        	log.error(e.getMessage());
             return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR,e.getMessage(),"查询失败！");
         }
     }

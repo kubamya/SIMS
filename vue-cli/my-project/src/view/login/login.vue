@@ -1,10 +1,25 @@
 <template>
     <div class="login-container">
-        <div class="login-logo">
-            <!-- <div class="login-logo-img"></div> -->
-        </div>
+        
         <div class="login-form">
-            <div class="login-form-row">
+            <div class="login-form-left">
+                <img src="../../../static/img/login/leftBackGround.png" width="100%" alt="">
+            </div>
+            <div class="login-form-right">
+                <div class="login-form-right-title">
+                    SIMS
+                </div>
+                <div class="login-form-ipt">
+                    <img src="../../../static/img/login/user.png" width="13"><input type="text" v-model="loginId" placeholder="请输入账号">
+                </div>
+                <div class="login-form-ipt">
+                    <img src="../../../static/img/login/password.png" width="13"><input type="password" v-model="password" placeholder="请输入密码">
+                </div>
+                <div class="login-form-ipt" style="border:none;">
+                    <el-button style="width:350px;height:45px;background:#2882fe;color:#fff;font-size:16px" @click="login()">登 录</el-button>
+                </div>                
+            </div>
+            <!-- <div class="login-form-row">
                 <div class="ipt-ico">
                     <i class="el-icon-user"></i>
                 </div>
@@ -21,11 +36,8 @@
                 </div>
             </div>
             <div class="login-form-row">
-                <el-button type="primary" style="width:100%;height:100%;border-radius:20px;" @click="login()">登录</el-button>
-            </div>
-        </div>
-        <div class="login-footer">
-            <!-- BOJIA | 辽宁博嘉科技 -->
+                <el-button type="primary" style="width:100%;height:100%;" @click="login()">登录</el-button>
+            </div> -->
         </div>
     </div>
 </template>
@@ -70,9 +82,47 @@ export default {
 </script>
 
 <style scoped>
+.login-form-left{
+    width: 650px;
+    height: 100%;
+    float: left;
+    /* background-image: url('../../../static/img/login/leftBackGround.png'); */
+}
+.login-form-right{
+    width: 550px;
+    height: 100%;
+    float: left;
+}
+.login-form-ipt{
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 15px;
+    text-align: center;
+    border: 1px solid #eee;
+}
+.login-form-ipt input{
+    width: 300px;
+    height: 40px;
+    border:none;
+    outline: none;
+    /* border: 1px solid #eee; */
+    padding-left: 10px;
+    line-height: 10px;
+    font-size: 16px;
+    color: #969696;
+}
+.login-form-right-title{
+    color: #2882fe;
+    font-size: 36px;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    line-height: 280px;
+}
 .login-container{
     width: 100%;
     height: 100%;
+    background-image: url('../../../static/img/login/background.png');
     position: relative;
 }
 .login-logo{
@@ -90,16 +140,17 @@ export default {
     border-radius: 50px
 }
 .login-form{
-    width: 80%;
-    height: 300px;
+    width: 1200px;
+    height: 573px;
     background-color: #fff;
     position: absolute;
-    top: 25%;
-    left: 10%;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
     box-sizing: border-box;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-    padding-top: 50px;
+    /* border-radius: 10px; */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .24), 0 0 12px rgba(0, 0, 0, .08);
+    /* padding-top: 50px; */
 }
 .login-form-row{
     width: 70%;

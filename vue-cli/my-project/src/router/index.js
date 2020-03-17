@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import cookie from '@/components/cookie.vue'
+import calender from '@/components/calender.vue'
 import ewm from '@/components/ewm.vue'
 import main from '@/view/main/main.vue'
 import login from '@/view/login/login.vue'
@@ -13,6 +14,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/calender',
+      name: 'calender',
+      component: calender
+    },
     {
       path: '/cookie',
       name: 'cookie',
