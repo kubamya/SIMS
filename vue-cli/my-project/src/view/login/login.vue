@@ -1,5 +1,5 @@
 <template>
-    <div class="login-container">
+    <div class="login-container" v-loading="loading">
         
         <div class="login-form">
             <div class="login-form-left">
@@ -48,11 +48,13 @@ export default {
         return {
             loginId:'',
             password:'',
+            loading:false
         }
     },
     methods:{
         
         login(){
+            this.loading = true;
             var params = new URLSearchParams();
             params.append('loginId', this.loginId);
             params.append('password', this.password);
@@ -69,7 +71,9 @@ export default {
                         this.$handleLocalStorage('set', 'username', res.data.username);
                         this.$handleLocalStorage('set', 'lastLoginTime', this.$getCurtime());
                         this.$router.push({path: '/main'});
+                        this.loading = false;
                     }else{
+                        this.loading = false;
                         this.$message({
                             message: res.msg,
                             type: 'warning'

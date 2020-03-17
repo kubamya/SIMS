@@ -49,7 +49,7 @@ export default {
     /* width: calc(100% - 150px); */
     width: 100%;
     height: calc(100% - 50px);
-    background: url('../../../static/img/mainBg.jpg');
+    background: url('../../../static/img/login/background.png');
     position: absolute;
     top: 50px;
     right: 0px;
