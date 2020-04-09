@@ -1,5 +1,5 @@
 <template>
-    <div class="organInfo-container">
+    <div class="organInfo-container" :loading="loading">
         <div class="info-content" v-if="nodeType == 'com'">
             <div class="info-header">
                 <div class="info-header-icon"><i class="el-icon-menu"></i></div>
@@ -33,10 +33,10 @@
             <div class="info-row"></div>
             <div class="info-row">
                 <div class="info-btns">
-                    <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
+                    <el-button class="info-btn" :disabled="isUpdate" @click="delCom()" type="danger">删除</el-button>
+                    <el-button class="info-btn" :disabled="isUpdate" @click="update()" type="primary">修改</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" @click="updataCom()" type="primary">保存</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" @click="cancel()">取消</el-button>
                 </div>                
             </div>
         </div>
@@ -97,10 +97,10 @@
             </div>
             <div class="info-row"></div>
             <div class="info-row">
-                <div class="info-btns">
+                <div class="info-btns">                    
+                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>
@@ -228,10 +228,10 @@
             <div class="info-row"></div>
             <div class="info-row">
                 <div class="info-btns">
+                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate" type="primary">修改密码</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
                     <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
                 </div>                
             </div>
@@ -245,6 +245,7 @@ export default {
     data(){
         return{
             isUpdate:false,
+            loading: false,
             com:{
                 name:'',
                 xssx:'',
@@ -273,7 +274,6 @@ export default {
     },
     watch:{
         nodeId(){
-            console.log('获得',this.nodeId);
             if(this.nodeType == 'dept'){
                 var params = new URLSearchParams();
                 params.append('deptId', this.nodeId);
@@ -354,7 +354,87 @@ export default {
         },
     },
     methods:{
+        //修改按钮点击事件
+        update(){
+            this.isUpdate = true;
+        },
+        //取消按钮点击事件
+        cancel(){
+            this.isUpdate = false;
+        },
+        //修改com信息
+        updataCom(){
+            this.loading = true;
+            var params = new URLSearchParams();
+            params.append('cXgr', this.$handleLocalStorage('get','userid'));
+            params.append('comId', this.com.id);
+            params.append('cName', this.com.name);
+            params.append('nXssx', this.com.xssx);
 
+            this.$axios({method:'post',url: _global.requestUrl+'/api/com/v1/updateComById', data: params}).then(response =>{
+                var res = this.$handleRes(response);
+                if(res.code == 100){
+                    //保存成功
+                    this.$message({
+                        message: '保存成功！',
+                        type: 'success'
+                    });
+                    this.loading = true;
+                    this.cancel();
+                    this.$emit('infoUpdated');
+                }else{
+                    //保存失败
+                    this.$message({
+                        message: res.msg,
+                        type: 'warning'
+                    });
+                    this.loading = false;
+                }
+            }).catch(error =>{
+                this.$message.error('保存失败！请联系管理员',error);
+                this.loading = false;
+            });
+
+        },
+        //删除com信息
+        delCom(){
+            this.$confirm('此操作将删除 '+ this.com.name +' 及下级信息, 是否继续?', '提示',{
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.loading = true;
+                var params = new URLSearchParams();
+                params.append('cXgr', this.$handleLocalStorage('get','userid'));
+                params.append('comId', this.com.id);
+
+                this.$axios({method:'post',url: _global.requestUrl+'/api/com/v1/setComDisableById', data: params}).then(response => {
+                    var res = this.$handleRes(response);
+                    if(res.code == 100){
+                        //删除成功
+                        this.$message({
+                            message: '删除成功！',
+                            type: 'success'
+                        });
+                        this.loading = false;
+                        this.$emit('infoUpdated');
+                    }else{
+                        //删除失败
+                        this.$message({
+                            message: res.msg,
+                            type: 'warning'
+                        });
+                        this.loading = false;
+                    }
+                }).catch(error => {
+                    this.$message.error('删除失败！请联系管理员',error);
+                    this.loading = false;
+                })
+
+            }).catch(() => {
+
+            });
+        }
     }
 }
 </script>

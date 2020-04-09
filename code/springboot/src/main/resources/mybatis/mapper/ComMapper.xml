@@ -2,6 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.com.mapper.ComMapper">
 
+	<update id="updateComById" parameterType="com.example.model.Com">
+		UPDATE t_sims_com 
+		SET 
+			c_name = #{CName, jdbcType=VARCHAR},
+			n_xssx = #{NXssx, jdbcType=INTEGER},
+			c_xgrid = #{CXgr, jdbcType=VARCHAR},
+			d_xgsj = #{DXgsj, jdbcType=TIMESTAMP}
+		WHERE
+			c_id = #{CId, jdbcType=VARCHAR}
+	</update>
+	
+	<update id="setComDisableById" parameterType="com.example.model.Com">
+		UPDATE t_sims_com 
+		SET 
+			n_sfyx = #{NSfyx, jdbcType=INTEGER},
+			c_xgrid = #{CXgr, jdbcType=VARCHAR},
+			d_xgsj = #{DXgsj, jdbcType=TIMESTAMP}
+		WHERE
+			c_id = #{CId, jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="addCom" parameterType="com.example.model.Com">
+		INSERT INTO t_sims_com ( c_id, c_name, n_sfyx, n_xssx, d_cjsj, c_cjrid )
+		VALUES (
+			#{CId, jdbcType=VARCHAR},
+			#{CName, jdbcType=VARCHAR},
+			#{NSfyx, jdbcType=INTEGER},
+			#{NXssx, jdbcType=INTEGER},
+			#{DCjsj, jdbcType=TIMESTAMP},
+			#{CCjr, jdbcType=VARCHAR}
+		)
+	</insert>
+
     <select id="getComById" parameterType="com.example.model.Com" resultType="com.example.model.Com">
         SELECT
             c_id AS CId,

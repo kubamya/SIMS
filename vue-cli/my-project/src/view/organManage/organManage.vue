@@ -1,7 +1,11 @@
 <template>
     <div class="organ-container">
         <div class="organ-treeContent">
-            <organTreeCom @prtFunc="show"></organTreeCom>
+            <organTreeCom
+                ref="organTree"
+                @prtFunc="show"
+                :key="reload">
+            </organTreeCom>
         </div>
         <div class="organ-editBtns">
             <el-button class="organ-editBtns-item" round type="primary" @click="openAddCom('com')">新增组织</el-button>
@@ -9,11 +13,17 @@
             <el-button class="organ-editBtns-item" round type="primary" @click="openAddCom('user')">新增人员</el-button>
         </div>
         <div class="organ-infoContent">
-            <organInfoCom :nodeId="nodeId" :nodeType="nodeType" ></organInfoCom>
+            <organInfoCom 
+                :nodeId="nodeId" 
+                :nodeType="nodeType"
+                :key="reload"
+                @infoUpdated="infoUpdated" >
+            </organInfoCom>
         </div>
 
         <el-dialog
             :title="addTitle"
+            :loading="loading"
             :visible.sync="dialogVisible"
             :close-on-click-modal="false"
             width="50%"
@@ -201,12 +211,13 @@
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="cancelAddcom()">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="save()">确 定</el-button>
             </span>
         </el-dialog>
     </div>
 </template>
 <script>
+import _global from '@/global/global.vue'
 import organTree from '@/components/organTree.vue'
 import organInfo from '@/components/organInfo.vue'
 export default {
@@ -220,7 +231,10 @@ export default {
             nodeType:'',
             addTitle:'',
 
+            reload:'',
+
             dialogVisible:false,
+            loading:false,
             comShow:false,
             deptShow:false,
             userShow:false,
@@ -249,6 +263,55 @@ export default {
         }
     },
     methods:{
+        //组织信息组件删除成功回调
+        infoUpdated(){
+            this.reload = this.$getCurtime();
+        },
+        //保存save信息
+        saveCom(){
+            //组装参数
+            this.loading = true;
+            var params = new URLSearchParams();
+            params.append('cCjr', this.$handleLocalStorage('get','userid'));
+            params.append('cName', this.com.name);
+            params.append('nXssx', this.com.xssx);
+
+            this.$axios({method:'post',url: _global.requestUrl+'/api/com/v1/addCom', data: params}).then(response => {
+                var res = this.$handleRes(response);
+                if(res.code == 100){
+                    this.$message({
+                        message: '保存成功！',
+                        type: 'success'
+                    });
+                    this.clearForm();
+                    this.loading = false;
+                    this.dialogVisible = false;
+                    this.reload = this.$getCurtime();
+                }else{
+                    this.$message({
+                        message: res.data,
+                        type: 'warning'
+                    });
+                    this.loading = false;
+                }
+            }).catch(error => {
+                this.$message.error('保存失败！请联系管理员',error);
+                this.loading = false;
+            })
+
+
+        },
+        //保存新增信息
+        save(){
+            if(this.comShow){
+                //保存com信息
+                this.saveCom();
+            }else if(this.deptShow){
+                //保存dept信息
+            }else if(this.userShow){
+                //保存user信息
+            }
+        },
         show(nodeId, nodeType){
             this.nodeId = nodeId;
             this.nodeType = nodeType;

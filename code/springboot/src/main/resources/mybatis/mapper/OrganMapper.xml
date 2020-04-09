@@ -45,7 +45,9 @@
             c_name AS CName,
             n_xssx AS NXssx
         FROM
-            t_sims_com
+            t_sims_com 
+        WHERE 
+			n_sfyx = 1 
         ORDER BY
             n_xssx ASC
     </select>
