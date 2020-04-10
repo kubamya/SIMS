@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.dept.mapper.DeptMapper">
+	
+	<update id="updateDeptById" parameterType="com.example.model.Dept">
+		UPDATE t_sims_dept 
+		SET 
+			c_name = #{CName, jdbcType=VARCHAR},
+			n_xssx = #{NXssx, jdbcType=INTEGER},
+			c_xgrid = #{CXgr, jdbcType=VARCHAR},
+			d_xgsj = #{DXgsj, jdbcType=TIMESTAMP}
+		WHERE
+			c_id = #{CId, jdbcType=VARCHAR}
+	</update>
+	
+	<update id="setDeptDisableById" parameterType="com.example.model.Dept">
+		UPDATE t_sims_dept 
+		SET 
+			n_sfyx = #{NSfyx, jdbcType=INTEGER},
+			c_xgrid = #{CXgr, jdbcType=VARCHAR},
+			d_xgsj = #{DXgsj, jdbcType=TIMESTAMP}
+		WHERE
+			c_id = #{CId, jdbcType=VARCHAR}
+	</update>
 
+	<insert id="addDept" parameterType="com.example.model.Dept">
+		INSERT INTO t_sims_dept ( c_id, c_name, n_sfyx, n_xssx, c_pid, c_comid, c_cjrid, d_cjsj )
+		VALUES
+			(
+				#{CId, jdbcType=VARCHAR},
+				#{CName, jdbcType=VARCHAR},
+				#{NSfyx, jdbcType=INTEGER},
+				#{NXssx, jdbcType=INTEGER},
+				#{CPid, jdbcType=VARCHAR},
+				#{CComId, jdbcType=VARCHAR},
+				#{CCjr, jdbcType=VARCHAR},
+				#{DCjsj, jdbcType=VARCHAR}
+			)
+	</insert>
     <select id="getDeptsByComId" parameterType="com.example.model.Com" resultType="com.example.model.Dept">
         SELECT
             c_id AS CId,

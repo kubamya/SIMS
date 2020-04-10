@@ -9,6 +9,9 @@ import com.example.model.User;
 import com.example.organ.service.OrganService;
 import com.example.user.service.UserService;
 import com.example.util.CommonReturnUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/organ/v1")
+@Slf4j
 public class OrganController{
 
     @Autowired
@@ -36,6 +40,31 @@ public class OrganController{
 
     @Autowired
     private UserService userService;
+    
+    /**
+     * 获取所属组织信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getParentComInfo")
+    public Map<String, Object> getParentInfo(HttpServletRequest request) {
+    	String nodeId = request.getParameter("nodeId");
+    	if(StringUtils.isEmpty(nodeId)) {
+    		return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL, null, "nodeId不能为空！");
+    	}
+    	
+    	Dept dept = new Dept();
+    	dept.setCId(nodeId);
+    	
+    	try {
+			Com com = organService.getParentComInfo(dept);
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, com, "查询成功");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, null, e.getMessage());
+		}
+    }
 
     /**
      * 获取user信息

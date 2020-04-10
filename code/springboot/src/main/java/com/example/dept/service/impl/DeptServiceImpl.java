@@ -24,4 +24,19 @@ public class DeptServiceImpl implements DeptService {
     public Dept getDeptById(Dept dept) {
         return deptMapper.getDeptById(dept);
     }
+
+	@Override
+	public void addDept(Dept dept) {
+		deptMapper.addDept(dept);
+	}
+
+	@Override
+	public void setDeptDisableById(Dept dept) {
+		deptMapper.setDeptDisableById(dept);
+	}
+
+	@Override
+	public void updateDeptById(Dept dept) {
+		deptMapper.updateDeptById(dept);
+	}
 }

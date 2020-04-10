@@ -44,4 +44,9 @@ public class OrganServiceImpl implements OrganService {
     public List<Com> getAllCom() {
         return organMapper.getAllCom();
     }
+
+	@Override
+	public Com getParentComInfo(Dept dept) {
+		return organMapper.getParentComInfo(dept);
+	}
 }

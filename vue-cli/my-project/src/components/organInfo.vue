@@ -13,8 +13,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="com.name" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
                 <div class="info-item">
@@ -23,8 +22,7 @@
                         <el-input 
                             style="width:50%;" 
                             type="number" 
-                            v-model="com.xssx" 
-                            placeholder="请输入顺序" 
+                            v-model="com.xssx"
                             :disabled="!isUpdate"
                             clearable></el-input>
                     </div>
@@ -53,8 +51,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="dept.comId" 
-                            :disabled="!isUpdate"
-                            placeholder="请选择组织"></el-input>
+                            disabled></el-input>
                     </div>
                     
                 </div>
@@ -65,8 +62,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="dept.pid" 
-                            :disabled="!isUpdate"
-                            placeholder="请选择部门"></el-input>
+                            disabled></el-input>
                     </div>
                 </div>
             </div>
@@ -78,8 +74,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="dept.name" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                     
                 </div>
@@ -90,18 +85,17 @@
                             style="width:50%;" 
                             clearable 
                             v-model="dept.xssx" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入顺序"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
             </div>
             <div class="info-row"></div>
             <div class="info-row">
                 <div class="info-btns">                    
-                    <el-button class="info-btn" :disabled="!isUpdate" type="danger">删除</el-button>
-                    <el-button class="info-btn" :disabled="isUpdate" type="primary">修改</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate" type="primary">保存</el-button>
-                    <el-button class="info-btn" :disabled="!isUpdate">取消</el-button>
+                    <el-button class="info-btn" :disabled="isUpdate" @click="delDept()" type="danger">删除</el-button>
+                    <el-button class="info-btn" :disabled="isUpdate" @click="update()" type="primary">修改</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" @click="updataDept()" type="primary">保存</el-button>
+                    <el-button class="info-btn" :disabled="!isUpdate" @click="cancel()">取消</el-button>
                 </div>                
             </div>
         </div>
@@ -118,8 +112,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.comId" 
-                            :disabled="!isUpdate"
-                            placeholder="选择组织"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                     
                 </div>
@@ -130,8 +123,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.deptId" 
-                            :disabled="!isUpdate"
-                            placeholder="请选择部门"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
             </div>
@@ -143,8 +135,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.name" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入名称"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                     
                 </div>
@@ -155,8 +146,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.loginId" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入账号"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
             </div>
@@ -195,8 +185,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.email" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入邮箱"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                     
                 </div>
@@ -207,8 +196,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.tel" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入电话"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
             </div>
@@ -220,8 +208,7 @@
                             style="width:50%;" 
                             clearable 
                             v-model="user.xssx" 
-                            :disabled="!isUpdate"
-                            placeholder="请输入顺序"></el-input>
+                            :disabled="!isUpdate"></el-input>
                     </div>
                 </div>
             </div>
@@ -362,6 +349,39 @@ export default {
         cancel(){
             this.isUpdate = false;
         },
+        //修改dept信息
+        updataDept(){
+            this.loading = true;
+            var params = new URLSearchParams();
+            params.append('cXgr', this.$handleLocalStorage('get','userid'));
+            params.append('cId', this.dept.id);
+            params.append('cName', this.dept.name);
+            params.append('nXssx', this.dept.xssx);
+
+            this.$axios({method:'post',url: _global.requestUrl+'/api/dept/v1/updateDeptById', data: params}).then(response =>{
+                var res = this.$handleRes(response);
+                if(res.code == 100){
+                    //保存成功
+                    this.$message({
+                        message: '保存成功！',
+                        type: 'success'
+                    });
+                    this.loading = true;
+                    this.cancel();
+                    this.$emit('infoUpdated');
+                }else{
+                    //保存失败
+                    this.$message({
+                        message: res.msg,
+                        type: 'warning'
+                    });
+                    this.loading = false;
+                }
+            }).catch(error =>{
+                this.$message.error('保存失败！请联系管理员',error);
+                this.loading = false;
+            });
+        },
         //修改com信息
         updataCom(){
             this.loading = true;
@@ -396,9 +416,48 @@ export default {
             });
 
         },
+        //删除del信息
+        delDept(){
+             this.$confirm('此操作将删除 '+ this.com.name +' 及下级所有信息, 是否继续?', '提示',{
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+             }).then(() => {
+                this.loading = true;
+                var params = new URLSearchParams();
+                params.append('cXgr', this.$handleLocalStorage('get','userid'));
+                params.append('cId', this.dept.id);
+
+                this.$axios({method:'post',url: _global.requestUrl+'/api/dept/v1/setDeptDisableById', data: params}).then(response => {
+                    var res = this.$handleRes(response);
+                    if(res.code == 100){
+                        //删除成功
+                        this.$message({
+                            message: '删除成功！',
+                            type: 'success'
+                        });
+                        this.loading = false;
+                        this.$emit('infoUpdated');
+                    }else{
+                        //删除失败
+                        this.$message({
+                            message: res.msg,
+                            type: 'warning'
+                        });
+                        this.loading = false;
+                    }
+                }).catch(error => {
+                    this.$message.error('删除失败！请联系管理员',error);
+                    this.loading = false;
+                })
+
+             }).catch(() => {
+
+            });
+        },
         //删除com信息
         delCom(){
-            this.$confirm('此操作将删除 '+ this.com.name +' 及下级信息, 是否继续?', '提示',{
+            this.$confirm('此操作将删除 '+ this.com.name +' 及下级所有信息, 是否继续?', '提示',{
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'

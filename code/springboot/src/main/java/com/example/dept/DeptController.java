@@ -5,10 +5,12 @@ import com.example.consts.IntegerConsts;
 import com.example.dept.service.DeptService;
 import com.example.model.Com;
 import com.example.model.Dept;
-import com.example.model.User;
-import com.example.user.service.UserService;
 import com.example.util.CommonReturnUtil;
 import com.example.util.CommonUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dept/v1")
+@Slf4j
 public class DeptController {
 
     @Autowired
@@ -29,9 +32,87 @@ public class DeptController {
 
     @Autowired
     private ComService comService;
+    
+    @ResponseBody
+    @RequestMapping("/updateDeptById")
+    public Map<String, Object> updateDeptById(HttpServletRequest request) {
+    	String cXssx = request.getParameter("nXssx");
+    	Integer nXssx = null;
+    	if(StringUtils.isNotEmpty(cXssx) && !"null".equals(cXssx)) {
+    		nXssx = Integer.parseInt(cXssx);
+    	}
+    	Dept dept = new Dept();
+    	dept.setCId(request.getParameter("cId"));
+    	dept.setCName(request.getParameter("cName"));
+    	dept.setCXgr(request.getParameter("cXgr"));
+    	dept.setDXgsj(CommonUtil.getCurDateTime());
+    	dept.setNXssx(nXssx);
+    	
+    	try {
+			deptService.updateDeptById(dept);
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, null, "保存成功！");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, null, e.getMessage());
+		}
+    }
 
-    @Autowired
-    private UserService userService;
+
+    /**
+     * 逻辑删除dept
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/setDeptDisableById")
+    public Map<String, Object> setDeptDisableById(HttpServletRequest request) {
+    	Dept dept = new Dept();
+    	dept.setCId(request.getParameter("cId"));
+    	dept.setCXgr(request.getParameter("cXgr"));
+    	dept.setNSfyx(IntegerConsts.CODE_NO);
+    	dept.setDXgsj(CommonUtil.getCurDateTime());
+    	
+    	try {
+			deptService.setDeptDisableById(dept);
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, null, "删除成功！"); 
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, null, e.getMessage());
+		}
+    }
+    
+    /**
+     * 新增dept
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addDept")
+    public Map<String, Object> addDept(HttpServletRequest request) {
+    	String cXssx = request.getParameter("cXssx");
+    	Integer nXssx = null;
+    	if(StringUtils.isNotEmpty(cXssx)) {
+    		nXssx = Integer.parseInt(cXssx);
+    	}
+    	
+    	Dept dept = new Dept();
+    	dept.setCId(CommonUtil.getUUid());
+    	dept.setCName(request.getParameter("cName"));
+    	dept.setNSfyx(IntegerConsts.CODE_YES);
+    	dept.setNXssx(nXssx);
+    	dept.setCPid(request.getParameter("cPid"));
+    	dept.setCComId(request.getParameter("cComid"));
+    	dept.setCCjr(request.getParameter("cCjr"));
+    	dept.setDCjsj(CommonUtil.getCurDateTime());
+    	
+    	try {
+			deptService.addDept(dept);
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, null, "保存成功！");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, null, e.getMessage());
+		}
+    }
 
     /**
      * 根据comid获取dept树形结构

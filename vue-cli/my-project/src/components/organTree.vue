@@ -34,7 +34,7 @@ export default {
     },
     methods:{
         handleNodeClick(data){
-            this.$emit('prtFunc',data.id, data.type);
+            this.$emit('prtFunc',data.id, data.type, data.name);
         },
         loadNode(node, resolve){
             //如果展开第一级节点，从后台加载一级节点列表

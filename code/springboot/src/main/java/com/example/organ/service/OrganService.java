@@ -9,6 +9,13 @@ import java.util.List;
 
 @Service
 public interface OrganService {
+	
+	/**
+	 * 获取所属组织
+	 * @param dept
+	 * @return
+	 */
+	public Com getParentComInfo(Dept dept);
 
     /**
      * 根据id获取com

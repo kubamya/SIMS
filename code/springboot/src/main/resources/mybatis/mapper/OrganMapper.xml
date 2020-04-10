@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.organ.mapper.OrganMapper">
 
+   	<select id="getParentComInfo" parameterType="com.example.model.Dept" resultType="com.example.model.Com">
+   		SELECT
+			com.c_id AS CId,
+			com.c_name AS CName 
+		FROM
+			t_sims_com AS com
+			LEFT JOIN t_sims_dept AS dept ON dept.c_comid = com.c_id 
+		WHERE
+			dept.c_id = #{CId, jdbcType=VARCHAR}
+   	</select>
+   
     <select id="getDeptByPid" parameterType="com.example.model.Dept" resultType="com.example.model.Dept">
         SELECT
             c_id AS CId,

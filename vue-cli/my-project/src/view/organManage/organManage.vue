@@ -8,9 +8,9 @@
             </organTreeCom>
         </div>
         <div class="organ-editBtns">
-            <el-button class="organ-editBtns-item" round type="primary" @click="openAddCom('com')">新增组织</el-button>
-            <el-button class="organ-editBtns-item" round type="primary" @click="openAddCom('dept')">新增部门</el-button>
-            <el-button class="organ-editBtns-item" round type="primary" @click="openAddCom('user')">新增人员</el-button>
+            <el-button class="organ-editBtns-item" round :disabled="addComDisable" type="primary" @click="openAddCom('com')">新增组织</el-button>
+            <el-button class="organ-editBtns-item" round :disabled="addDeptDisable" type="primary" @click="openAddCom('dept')">新增部门</el-button>
+            <el-button class="organ-editBtns-item" round :disabled="addUserDisable" type="primary" @click="openAddCom('user')">新增人员</el-button>
         </div>
         <div class="organ-infoContent">
             <organInfoCom 
@@ -61,7 +61,8 @@
                             <el-input 
                                 style="width:50%;" 
                                 clearable 
-                                v-model="dept.comId"
+                                disabled
+                                v-model="dept.comName"
                                 placeholder="请选择组织"></el-input>
                         </div>
                         
@@ -72,7 +73,8 @@
                             <el-input 
                                 style="width:50%;" 
                                 clearable 
-                                v-model="dept.pid"
+                                disabled
+                                v-model="dept.pName"
                                 placeholder="请选择部门"></el-input>
                         </div>
                     </div>
@@ -229,6 +231,8 @@ export default {
         return{
             nodeId:'',
             nodeType:'',
+            nodeName:'',
+
             addTitle:'',
 
             reload:'',
@@ -239,19 +243,27 @@ export default {
             deptShow:false,
             userShow:false,
 
+            addComDisable:false,
+            addDeptDisable:true,
+            addUserDisable:true,
+
             com:{
                 name:'',
                 xssx:'',
             },
             dept:{
                 comId:'',
+                comName:'',
                 pid:'',
+                pName:'',
                 name:'',
                 xssx:'',
             },
             user:{
                 comId:'',
+                comName:'',
                 deptId:'',
+                deptName:'',
                 name:'',
                 loginId:'',
                 password:'',
@@ -267,7 +279,43 @@ export default {
         infoUpdated(){
             this.reload = this.$getCurtime();
         },
-        //保存save信息
+        //保存dept信息
+        saveDept(){
+            //组装参数
+            this.loading = true;
+            var params = new URLSearchParams();
+            params.append('cCjr', this.$handleLocalStorage('get','userid'));
+            params.append('cName', this.dept.name);
+            params.append('nXssx', this.dept.xssx);
+            if(this.nodeType == 'dept'){
+                params.append('cPid', this.dept.pid);
+            }            
+            params.append('cComid', this.dept.comId);
+
+            this.$axios({method:'post',url: _global.requestUrl+'/api/dept/v1/addDept', data: params}).then(response => {
+                var res = this.$handleRes(response);
+                if(res.code == 100){
+                    this.$message({
+                        message: '保存成功！',
+                        type: 'success'
+                    });
+                    this.clearForm();
+                    this.loading = false;
+                    this.dialogVisible = false;
+                    this.reload = this.$getCurtime();
+                }else{
+                    this.$message({
+                        message: res.data,
+                        type: 'warning'
+                    });
+                    this.loading = false;
+                }
+            }).catch(error => {
+                this.$message.error('保存失败！请联系管理员',error);
+                this.loading = false;
+            })
+        },
+        //保存com信息
         saveCom(){
             //组装参数
             this.loading = true;
@@ -308,13 +356,30 @@ export default {
                 this.saveCom();
             }else if(this.deptShow){
                 //保存dept信息
+                this.saveDept();
             }else if(this.userShow){
                 //保存user信息
             }
         },
-        show(nodeId, nodeType){
+        show(nodeId, nodeType, nodeName){
             this.nodeId = nodeId;
             this.nodeType = nodeType;
+            this.nodeName = nodeName;
+
+            switch(nodeType){
+                case 'com': 
+                    this.addDeptDisable = false;
+                    this.addUserDisable = true;
+                break;
+                case 'dept': 
+                    this.addUserDisable = false;
+                    this.addDeptDisable = false;
+                break;
+                case 'user':
+                    this.addDeptDisable = true;
+                    this.addUserDisable = true;
+                break;
+            }
         },
         clearForm(){
             this.com.name = '';
@@ -348,12 +413,56 @@ export default {
                 case 'dept' :
                     this.addTitle = '新增部门';
                     this.deptShow = true;
+                    //判断是组织下创建还是部门下创建
+                    if(this.nodeType == 'com'){
+                        //组织下创建
+                        console.log('com-dept-nodeId',this.nodeId);
+                        this.dept.comId = this.nodeId;
+                        this.dept.comName = this.nodeName;
+                        //清掉上次点击数据
+                        this.dept.pid = null;
+                        this.dept.pName = null;
+                    }else{
+                        //部门下创建                        
+                        this.dept.pid = this.nodeId;
+                        this.dept.pName = this.nodeName;
+                        //清掉上次点击数据
+                        this.dept.comId = null;
+                        this.dept.comName = null;
+                        //查所属组织
+                        this.getParentCom();
+                        console.log('dept-dept-nodeId',this.dept.comId);
+                    }
                 break;
                 case 'user' :
                     this.addTitle = '新增人员';
                     this.userShow = true;
                 break;
             }
+        },
+        //获取所属组织
+        getParentCom(){
+            var params = new URLSearchParams();
+            params.append('nodeId', this.nodeId);
+
+            this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getParentComInfo', data: params}).then(response => {
+                debugger
+                var res = this.$handleRes(response);
+                if(res.code == 100){
+                    this.dept.comId = res.data.cid;
+                    this.dept.comName = res.data.cname;
+                    this.user.comId = res.data.cid;
+                    this.user.comName = res.data.cname;
+                }else{
+                    this.$message({
+                        message: res.data,
+                        type: 'warning'
+                    });
+                }
+            }).catch(error => {
+                this.$message.error('获取所属组织失败！请联系管理员',error);
+            })
+
         },
         handleClose(){
             this.clearForm();           

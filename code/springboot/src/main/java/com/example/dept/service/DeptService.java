@@ -8,6 +8,24 @@ import java.util.List;
 
 @Service
 public interface DeptService {
+	
+	/**
+	 * 更新dept
+	 * @param dept
+	 */
+	public void updateDeptById(Dept dept);
+	
+	/**
+	 * 逻辑删除dept
+	 * @param dept
+	 */
+	public void setDeptDisableById(Dept dept);
+	
+	/**
+	 * 新增dept
+	 * @param dept
+	 */
+	public void addDept(Dept dept);
 
     /**
      * 根据ComId获取所有dept
