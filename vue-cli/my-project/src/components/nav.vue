@@ -14,6 +14,7 @@ export default {
         return {
             navData:[
                 {id:'1', label:'系统首页', icon:'el-icon-house'},
+                {id:'6', label:'人员管理', icon:'el-icon-user'},
                 {id:'2', label:'日程管理', icon:'el-icon-notebook-1'},
                 {id:'3', label:'组织机构管理', icon:'el-icon-office-building'},
                 {id:'4', label:'权限管理', icon:'el-icon-document-checked'},
@@ -36,6 +37,14 @@ export default {
                     });
                 break;
                 case '5': 
+                    this.$notify({
+                        title: '提示',
+                        type: 'warning',
+                        duration: 1500,
+                        message: '此模块暂未开放！'
+                    });
+                break;
+                case '6': 
                     this.$notify({
                         title: '提示',
                         type: 'warning',

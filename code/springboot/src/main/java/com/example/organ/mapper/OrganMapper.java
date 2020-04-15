@@ -1,14 +1,23 @@
 package com.example.organ.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import com.example.model.Com;
 import com.example.model.Dept;
 import com.example.model.User;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface OrganMapper {
+	
+	/**
+	 * 获取user的父级信息
+	 * @param user
+	 * @return
+	 */
+	public Map<String, Object> getUserParentInfo(User user);
 	
 	/**
 	 * 获取所属组织

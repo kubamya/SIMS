@@ -2,6 +2,7 @@ package com.example.organ;
 
 import com.example.com.service.ComService;
 import com.example.consts.IntegerConsts;
+import com.example.consts.StringConsts;
 import com.example.dept.service.DeptService;
 import com.example.model.Com;
 import com.example.model.Dept;
@@ -50,16 +51,31 @@ public class OrganController{
     @RequestMapping("/getParentComInfo")
     public Map<String, Object> getParentInfo(HttpServletRequest request) {
     	String nodeId = request.getParameter("nodeId");
+    	String nodeType = request.getParameter("nodeType");
     	if(StringUtils.isEmpty(nodeId)) {
     		return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL, null, "nodeId不能为空！");
     	}
-    	
-    	Dept dept = new Dept();
-    	dept.setCId(nodeId);
+    	if(StringUtils.isEmpty(nodeType)) {
+    		return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL, null, "nodeType不能为空！");
+    	}
     	
     	try {
-			Com com = organService.getParentComInfo(dept);
-			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, com, "查询成功");
+    		if(StringConsts.ORGAN_TYPE_USER.equals(nodeType)) {
+    			User user = new User();
+    			user.setCId(nodeId);
+    			
+    			Map<String, Object> result = organService.getUserParentInfo(user);
+    			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, result, "查询成功");
+    			
+    		}else if(StringConsts.ORGAN_TYPE_DEPT.equals(nodeType)) {
+    			Dept dept = new Dept();
+            	dept.setCId(nodeId);
+            	
+    			Com com = organService.getParentComInfo(dept);
+    			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_SUCCESS, com, "查询成功");
+    		}else {
+    			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_FAIL, null, "nodeType不合法！");
+    		}	
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return CommonReturnUtil.CommonReturnMsg(IntegerConsts.RET_CODE_DATABASEERROR, null, e.getMessage());

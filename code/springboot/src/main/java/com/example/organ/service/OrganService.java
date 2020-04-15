@@ -6,9 +6,17 @@ import com.example.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface OrganService {
+	
+	/**
+	 * 获取user的父级信息
+	 * @param user
+	 * @return
+	 */
+	public Map<String, Object> getUserParentInfo(User user);
 	
 	/**
 	 * 获取所属组织

@@ -10,7 +10,7 @@
         <div class="organ-editBtns">
             <el-button class="organ-editBtns-item" round :disabled="addComDisable" type="primary" @click="openAddCom('com')">新增组织</el-button>
             <el-button class="organ-editBtns-item" round :disabled="addDeptDisable" type="primary" @click="openAddCom('dept')">新增部门</el-button>
-            <el-button class="organ-editBtns-item" round :disabled="addUserDisable" type="primary" @click="openAddCom('user')">新增人员</el-button>
+            <!-- <el-button class="organ-editBtns-item" round :disabled="addUserDisable" type="primary" @click="openAddCom('user')">新增人员</el-button> -->
         </div>
         <div class="organ-infoContent">
             <organInfoCom 
@@ -110,8 +110,9 @@
                         <div class="info-item-value">
                             <el-input 
                                 style="width:50%;" 
-                                clearable 
-                                v-model="user.comId"
+                                clearable
+                                disabled
+                                v-model="user.comName"
                                 placeholder="选择组织"></el-input>
                         </div>
                         
@@ -122,7 +123,8 @@
                             <el-input 
                                 style="width:50%;" 
                                 clearable 
-                                v-model="user.deptId" 
+                                disabled
+                                v-model="user.deptName" 
                                 placeholder="请选择部门"></el-input>
                         </div>
                     </div>
@@ -416,7 +418,6 @@ export default {
                     //判断是组织下创建还是部门下创建
                     if(this.nodeType == 'com'){
                         //组织下创建
-                        console.log('com-dept-nodeId',this.nodeId);
                         this.dept.comId = this.nodeId;
                         this.dept.comName = this.nodeName;
                         //清掉上次点击数据
@@ -431,11 +432,12 @@ export default {
                         this.dept.comName = null;
                         //查所属组织
                         this.getParentCom();
-                        console.log('dept-dept-nodeId',this.dept.comId);
                     }
                 break;
                 case 'user' :
-                    this.addTitle = '新增人员';
+                    this.addTitle = '新增人员';                    
+                    //查所属组织
+                    this.getParentCom();
                     this.userShow = true;
                 break;
             }
@@ -444,15 +446,21 @@ export default {
         getParentCom(){
             var params = new URLSearchParams();
             params.append('nodeId', this.nodeId);
+            params.append('nodeType', this.nodeType);
 
             this.$axios({method:'post',url: _global.requestUrl+'/api/organ/v1/getParentComInfo', data: params}).then(response => {
                 debugger
                 var res = this.$handleRes(response);
-                if(res.code == 100){
+                if(res.code == 100 && this.nodeType == 'dept'){
                     this.dept.comId = res.data.cid;
                     this.dept.comName = res.data.cname;
                     this.user.comId = res.data.cid;
                     this.user.comName = res.data.cname;
+                }else if(res.code == 100 && this.nodeType == 'user'){
+                    this.user.comId = res.data.comid;
+                    this.user.comName = res.data.comname;
+                    this.user.deptId = res.data.deptid;
+                    this.user.deptName = res.data.deptname;
                 }else{
                     this.$message({
                         message: res.data,

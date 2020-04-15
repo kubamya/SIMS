@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrganServiceImpl implements OrganService {
@@ -48,5 +49,10 @@ public class OrganServiceImpl implements OrganService {
 	@Override
 	public Com getParentComInfo(Dept dept) {
 		return organMapper.getParentComInfo(dept);
+	}
+
+	@Override
+	public Map<String, Object> getUserParentInfo(User user) {
+		return organMapper.getUserParentInfo(user);
 	}
 }

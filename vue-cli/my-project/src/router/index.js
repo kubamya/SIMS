@@ -9,11 +9,17 @@ import login from '@/view/login/login.vue'
 import organManage from '@/view/organManage/organManage.vue'
 import schedule from '@/view/schedule/schedule.vue'
 
+import test from '@/test/test.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/test',
+      name: 'test',
+      component: test
+    },
     {
       path: '/calender',
       name: 'calender',
