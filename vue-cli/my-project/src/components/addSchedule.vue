@@ -82,12 +82,7 @@
             :before-close="handleClose">
 
             <div class="userTree-area">
-                <el-tree 
-                    :data="userTreeData"
-                    :props="defaultProps" 
-                    show-checkbox 
-                    ref="tree">
-                </el-tree>
+               <organTreeCom :showCheckbox="true"></organTreeCom>
             </div>            
             
             <span slot="footer" class="dialog-footer">
@@ -98,7 +93,11 @@
     </div>
 </template>
 <script>
+import organTree from './organTree.vue';
 export default {
+    components:{
+        organTreeCom : organTree
+    },
   data() {
     return {
       cyrDialogVisible: false,

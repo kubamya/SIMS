@@ -9,8 +9,13 @@
             </div>
         </div>
         <div class="calender-date">
-            <div class="calender-date-item" v-for="item in calenderData" :key="item.id">
-                {{item.day}}
+            <div class="calender-date-item" v-for="item in calenderData" :key="item.id" :id="item.id">
+                <div class="calender-date-item-left">
+                  {{item.day}}
+                </div>
+                <div class="calender-date-item-right">
+
+                </div>
             </div>
         </div>
     </div>
@@ -124,6 +129,23 @@ export default {
 </script>
 
 <style scoped>
+.calender-date-item-btn{
+  width: 10%;
+  height: 100%;
+  line-height: 0;
+  font-size: 14px;
+  position: absolute;
+  right: 0;
+  top: 10px;
+  cursor: pointer;
+}
+.calender-date-item-left{
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 .calender-container {
   width: 100%;
   height: 100%;
@@ -171,9 +193,10 @@ export default {
     background-color: #dddddd;
     margin: 1px;
     border-radius: 5px;
+    position: relative;
 }
 .calender-date-item:hover{
-    cursor: pointer;
+    /* cursor: pointer; */
     background-color: #cccccc;
 }
 </style>

@@ -9,6 +9,7 @@
             <el-tree
                 :props="props"
                 :load="loadNode"
+                :show-checkbox="showCheckbox"
                 @node-click="handleNodeClick"
                 :expand-on-click-node="false"
                 lazy>
@@ -19,6 +20,14 @@
 <script>
 import _global from '@/global/global.vue'
 export default {
+    props:{
+        showCheckbox:{
+            type: Boolean,
+            default: function(params){
+                return false;
+            }
+        }
+    },
     data(){
         return{
             props: {
